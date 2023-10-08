@@ -11,6 +11,7 @@ function moduleProject1() {
  //console.log(divNames)
  divNames.forEach((divName, i) => {
   divName.classList.add('widget')
+  
   divName.setAttribute('tabindex', i + 1 + '')
  })
 
