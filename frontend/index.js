@@ -9,8 +9,9 @@ function moduleProject1() {
   const divNames = document.querySelectorAll('div')
  
  //console.log(divNames)
- divNames.forEach(divName => {
+ divNames.forEach((divName, i) => {
   divName.classList.add('widget')
+  divName.setAttribute('tabindex', i + 1 + '')
  })
 
   // 👉 TASK 2 - Build a "Quote of the Day" widget
@@ -73,16 +74,40 @@ corpParag.textContent = corpText
 
   // 👉 TASK 5 - Build a "Friends" widget
   const randomPerson = people[Math.floor(Math.random()*people.length)]
-  console.log(randomPerson)
+  //console.log(randomPerson)
 
   const friendswidget = document.querySelector('.friends')
   const friendsp = document.createElement('p')
   friendswidget.appendChild(friendsp)
   // const person = {fname, lname}
   // const birthYear = {dateOfBirth}[year]
-  friendsp.textContent = `${randomPerson.fname} was born in  and is friends with `
+  const year = randomPerson.dateOfBirth.split('-')[0]
+  let sentence = `${randomPerson.fname} ${randomPerson.lname} was born in ${year} and `
 
+  if (!randomPerson.friends.length){
+    sentence += 'has no friends.'
+  } else {
+    sentence += `is friends with `
 
+    for(let i = 0; i < randomPerson.friends.length; i++){
+    const friendsId = randomPerson.friends[i]
+    //console.log(friendsId)
+    const friend = people.find(p => p.id === friendsId)
+    //console.log(friend)
+    const fullName = `${friend.fname} ${friend.lname}`
+    //console.log(fullName)
+
+    let isLastI = i === randomPerson.friends.length -1
+    let isNextToLastI = i === randomPerson.friends.length -2
+    if (isLastI){
+      sentence += `${fullName}.`
+    } else if (isNextToLastI) {
+      sentence += `${fullName} and `
+    } else {
+      sentence += `${fullName}, `
+    }
+  }
+  } friendsp.textContent = sentence
   // 👉 TASK 6 - Make it so user can tab through the widgets
   //  ✨ add your code here
 
